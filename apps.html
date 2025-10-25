@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>تطبيقات الذكاء الاصطناعي</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { font-family: Arial; margin: 20px; }
+    nav a { margin: 10px; text-decoration: none; color: #0077cc; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+    .details { display: none; background-color: #f9f9f9; }
+    button.toggle { padding: 5px 10px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <!-- ✅ شريط التنقل -->
+  <nav>
+    <a href="home.html">الرئيسية</a>|
+    <a href="aboutus.html">من نحن</a>|
+    <a href="apps.html">التطبيقات</a>|
+    <a href="add_app.html">إضافة تطبيق</a>
+  </nav>
+
+  <h2>قائمة التطبيقات</h2>
+
+  <table id="appsTable">
+    <tr>
+      <th>اسم التطبيق</th>
+      <th>الشركة</th>
+      <th>الموقع</th>
+      <th>مجاني؟</th>
+      <th>المجال</th>
+      <th>زر التفاصيل</th>
+    </tr>
+  </table>
+
+ <script>
+  let apps = JSON.parse(localStorage.getItem("apps")) || [];
+  const table = document.getElementById("appsTable");
+
+  function renderTable() {
+    // مسح الصفوف القديمة (ما عدا رأس الجدول)
+    table.innerHTML = `
+      <tr>
+        <th>اسم التطبيق</th>
+        <th>الشركة</th>
+        <th>الموقع</th>
+        <th>مجاني؟</th>
+        <th>المجال</th>
+        <th>زر التفاصيل</th>
+        <th>حذف</th>
+      </tr>
+    `;
+
+    apps.forEach((app, index) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${app.name}</td>
+        <td>${app.company}</td>
+        <td><a href="${app.website}" target="_blank">${app.website}</a></td>
+        <td>${app.isFree}</td>
+        <td>${app.category}</td>
+        <td><button class="toggle" onclick="toggleDetails(${index})">إظهار التفاصيل</button></td>
+        <td><button onclick="deleteApp(${index})">🗑 حذف</button></td>
+      `;
+      table.appendChild(row);
+
+      const detailRow = document.createElement("tr");
+      detailRow.className = "details";
+      detailRow.id = `details-${index}`;
+      detailRow.innerHTML = `
+        <td colspan="7">
+          <strong>شرح مختصر:</strong> ${app.description}<br>
+          <strong>صورة أو فيديو:</strong> (يمكنك إضافة لاحقًا)
+        </td>
+      `;
+      table.appendChild(detailRow);
+    });
+  }
+
+  function toggleDetails(index) {
+    const row = document.getElementById(`details-${index}`);
+    row.style.display = row.style.display === "table-row" ? "none" : "table-row";
+  }
+
+  function deleteApp(index) {
+    if (confirm("هل أنت متأكد أنك تريد حذف هذا التطبيق؟")) {
+      apps.splice(index, 1);
+      localStorage.setItem("apps", JSON.stringify(apps));
+      renderTable();
+    }
+  }
+
+  renderTable();
+</script>
+
+
+</body>
+</html>

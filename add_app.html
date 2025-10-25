@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>إضافة تطبيق جديد</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="myFunctions.js" defer></script>
+  <style>
+    body { font-family: Arial; margin: 20px; }
+    nav a { margin: 10px; text-decoration: none; color: #0077cc; }
+    form { margin-top: 20px; }
+    label { display: block; margin-top: 10px; }
+    input, select, textarea { width: 100%; padding: 8px; margin-top: 5px; }
+    button { margin-top: 15px; padding: 8px 12px; }
+  </style>
+</head>
+<body>
+
+  <!-- ✅ شريط التنقل -->
+  <nav>
+    <a href="home.html">الرئيسية</a>|
+    <a href="aboutus.html">من نحن</a>|
+    <a href="apps.html">التطبيقات</a>|
+    <a href="add_app.html">إضافة تطبيق</a>
+  </nav>
+
+  <h2>إدخال معلومات تطبيق جديد</h2>
+
+  <form id="appForm">
+    <label>اسم التطبيق:</label>
+    <input type="text" id="appName" required>
+
+    <label>الشركة المصنعة:</label>
+    <input type="text" id="company" required>
+
+    <label>الموقع الإلكتروني:</label>
+    <input type="url" id="website" required>
+
+    <label>مجاني؟</label>
+    <select id="isFree">
+      <option value="نعم">نعم</option>
+      <option value="لا">لا</option>
+    </select>
+
+    <label>مجال الاستخدام:</label>
+    <select id="category">
+      <option value="Robotics">Robotics</option>
+      <option value="Education">Education</option>
+      <option value="E-Commerce">E-Commerce</option>
+    </select>
+
+    <label>شرح مختصر:</label>
+    <textarea id="description" required></textarea>
+
+    <button type="button" onclick="submitApp()">إرسال</button>
+    <button type="reset">إعادة</button>
+  </form>
+
+</body>
+</html>
